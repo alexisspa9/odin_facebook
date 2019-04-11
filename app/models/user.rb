@@ -6,6 +6,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+   has_many :sent_requests, class_name: 'FriendRequest', foreign_key: 'requestor_id', dependent: :destroy
+   has_many :received_requests, class_name: 'FriendRequest', foreign_key: 'requestee_id', dependent: :destroy
+
+
 	def after_confirmation
 	  UserMailer.welcome_email(self).deliver
 	end
