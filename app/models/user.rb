@@ -13,4 +13,8 @@ class User < ApplicationRecord
 	def after_confirmation
 	  UserMailer.welcome_email(self).deliver
 	end
+
+  def sent_requests
+    User.joins(:received_requests).merge(FriendRequest.where(:requestor_id => id))
+  end
 end

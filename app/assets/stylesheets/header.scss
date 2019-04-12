@@ -36,3 +36,31 @@ header {
 .new_user {
 	max-width: 800px;
 }
+
+
+.dropdown-menu > li > a {
+	color: black;
+}
+
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+ background-color: white;
+}
+
+.badge {
+	display: inline-block;
+    min-width: 10px;
+    position: absolute;
+    top: -12px;
+    right: -18px;
+    padding: 3px 4px 6px 4px;
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #b52d2d;
+    border-radius: 10px;
+}

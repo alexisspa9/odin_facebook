@@ -29,15 +29,49 @@
         <%= render "devise/sessions/form" %>      
       </div>
       <% else %>
-        <%= link_to " Log out", destroy_user_session_path, method: :delete %>
+       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-user">
+            <% unless @friend_requests.empty? %>
+            <span class="badge"><%= @friend_requests.count %></span>
+            <% end %>
+          </span>
+        </a>
+       <% unless @friend_requests.empty? %>
+          <ul class="dropdown-menu">
+            <li>Friend Requests</li>
+            <li role="separator" class="divider"></li>
+            <% @friend_requests.each do |friend_request| %>
+            <li><%= friend_request.requestor.name %><br/> 
+              
+            </li>
+           <% end %>
+          </ul>
+        <% end %>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cd"><span class="badge">42</span></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li role="separator" class="divider"></li>
+            <li><%= link_to " Log out", destroy_user_session_path, method: :delete %></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li role="separator" class="divider"></li>
+            <li><%= link_to " Log out", destroy_user_session_path, method: :delete %></li>
+          </ul>
+        </li>
+      </ul>
       <% end %>
      </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 </header>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    
+    <%= render "layouts/flash_messages" %>
     <div class="container">
         <%= yield %>
     </div>
