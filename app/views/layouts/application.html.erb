@@ -52,15 +52,25 @@
             </li>
            <% end %>
           </ul>
+        <% else %>
+         <ul class="dropdown-menu">
+          <p>There are no friend requests</p>
+         </ul>
         <% end %>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cd"><span class="badge">42</span></span></a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "View your profile", user_path(current_user) %></li>
-            <li role="separator" class="divider"></li>
-            <li><%= link_to " Log out", destroy_user_session_path, method: :delete %></li>
-          </ul>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cd"><span class="badge"><%= current_user.unread_notifications.size %></span></span></a>
+                    <ul class="dropdown-menu">
+          <% unless current_user.unread_notifications.empty? %>
+            <% current_user.unread_notifications.each do |notification| %>
+            <li><%= notification.body %> <br/>
+                  <%= link_to 'Read', make_read_notification_path(notification), method: :put, class: "btn" %> 
+            </li>
+            <% end %>
+          <% else %>
+          <p>There are no new notifications</p>
+          <% end %>
+           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>

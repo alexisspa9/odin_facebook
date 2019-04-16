@@ -12,8 +12,10 @@ has_many :sent_requests, class_name: 'FriendRequest',
   has_many :received_requests, class_name: 'FriendRequest',
     foreign_key: 'requestee_id', dependent: :destroy
 
-  has_many :friends, through: :friendships, class_name: 'User'
   has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships, class_name: 'User'
+  has_many :notifications
+
 
 
 	def after_confirmation
@@ -24,7 +26,28 @@ has_many :sent_requests, class_name: 'FriendRequest',
     FriendRequest.where(requestee_id: id).includes(:requestor)
   end
 
-  # def not_friends
-  #   User.where()
-  # end
+  def not_friends
+    User.all.where('id <> :user AND
+      id NOT IN (SELECT friend_id FROM friendships WHERE user_id = :user)',
+      user: id)
+  end
+
+  def is_friend(friend)
+    Friendship.find_by(friend_id: friend.id, user_id: id) || Friendship.find_by(friend_id: id, user_id: friend.id)
+  end
+
+
+  def is_sent_request(friend)
+      self.sent_requests.find_by(requestee_id: friend.id)
+  end
+
+  def is_received_request(friend)
+     self.received_requests.find_by(requestor_id: friend.id)
+  end
+
+  def unread_notifications
+    self.notifications.where(is_read: false)
+  end
+
+
 end
