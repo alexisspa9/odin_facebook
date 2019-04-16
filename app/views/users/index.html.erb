@@ -1,0 +1,5 @@
+<% @users.each do |user| %>
+
+<%= user.name %>
+<%= render "shared/sent_friend_request", user: user %>
+<% end %>

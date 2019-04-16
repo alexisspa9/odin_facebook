@@ -1,0 +1,4 @@
+	<%= form_tag(friend_requests_path, method: :post) do %>
+	    <%= hidden_field_tag :requestee, user.id %>
+	    <%= submit_tag 'Send Friend Request', class: 'btn btn-outline-primary btn-sm' %>
+	<% end %>
