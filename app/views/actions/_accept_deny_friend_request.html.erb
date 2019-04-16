@@ -1,5 +1,5 @@
 <%= form_tag(friendships_path, method: :post) do %>
-<%= hidden_field_tag :friend_id, @user.id %>
-<%= submit_tag 'Accept Friend Request', class: 'btn btn-outline-primary btn-sm' %>
+	<%= hidden_field_tag :friend_id, @user.id %>
+	<%= submit_tag 'Accept Friend Request', class: 'btn btn-outline-primary btn-sm' %>
 <% end %>
 <%= link_to "Deny Friend Request", friend_request_path(current_user.is_received_request(@user)), method: :delete %>

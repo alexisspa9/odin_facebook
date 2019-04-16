@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   validates :email, uniqueness: true
   validates :name, presence: true
   # Include default devise modules. Others available are:
@@ -7,7 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-has_many :sent_requests, class_name: 'FriendRequest',
+  has_many :sent_requests, class_name: 'FriendRequest',
     foreign_key: 'requestor_id', dependent: :destroy
   has_many :received_requests, class_name: 'FriendRequest',
     foreign_key: 'requestee_id', dependent: :destroy

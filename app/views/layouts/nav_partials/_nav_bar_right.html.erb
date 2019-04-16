@@ -1,0 +1,20 @@
+<ul class="nav navbar-nav navbar-right">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-user">
+    <%= render "layouts/nav_partials/badge", count: current_user.friend_requests.size unless  current_user.friend_requests.empty? %>
+    </span>
+  </a>
+   <ul class="dropdown-menu">
+ <%= render friend_requests_dropdown %>
+   </ul>
+  </li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cd">
+      <%= render "layouts/nav_partials/badge", count: current_user.unread_notifications.size unless current_user.unread_notifications.empty? %>
+    </span></a>
+    <ul class="dropdown-menu">
+    <%= render notifications_dropdown %>
+     </ul>
+  </li>
+  <%= render "layouts/nav_partials/user_menu" %>
+</ul>

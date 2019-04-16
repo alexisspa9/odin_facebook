@@ -9,12 +9,12 @@ class FriendRequestsController < ApplicationController
 
   def destroy
   	if (request = current_user.sent_requests.find_by_id(params[:id]) || request = current_user.received_requests.find_by_id(params[:id]) )
-  	request.destroy
-  	flash[:notice] = "Friend request cancelled"
-  	redirect_back(fallback_location: root_path)
+    	request.destroy
+    	flash[:notice] = "Friend request cancelled"
+    	redirect_back(fallback_location: root_path)
   	else
-  	flash[:notice] = "Friend couldn't be found"
-  	redirect_back(fallback_location: root_path)
+    	flash[:notice] = "Friend couldn't be found"
+    	redirect_back(fallback_location: root_path)
   	end
   end
 end

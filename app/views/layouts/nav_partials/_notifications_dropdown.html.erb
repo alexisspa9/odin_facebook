@@ -1,0 +1,5 @@
+<% current_user.unread_notifications.each do |notification| %>
+<li><%= notification.body %> <br/>
+    <%= link_to 'Read', make_read_notification_path(notification), method: :put, class: "btn" %> 
+</li>
+<% end %>

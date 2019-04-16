@@ -2,7 +2,7 @@ class Friendship < ApplicationRecord
 	belongs_to :user
 	belongs_to :friend, class_name: "User"
 	after_save :mirror_friendship
-    after_destroy :mirror_destruction
+  after_destroy :mirror_destruction
 
 
   private

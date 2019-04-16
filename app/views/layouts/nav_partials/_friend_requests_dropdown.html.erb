@@ -1,0 +1,12 @@
+<li>Friend Requests</li>
+<li role="separator" class="divider"></li>
+<% current_user.friend_requests.each do |friend_request| %>
+<li><%= friend_request.requestor.name %><br/> 
+    <%= form_tag(friendships_path, method: :post) do %>
+      <%= hidden_field_tag :friend_id, friend_request.requestor.id %>
+      <%= submit_tag 'Accept', class: 'btn btn-outline-primary btn-sm' %>
+  <% end %>
+  <%= link_to "Delete", friend_request_path(friend_request), method: :delete %>
+  
+</li>
+<% end %>
