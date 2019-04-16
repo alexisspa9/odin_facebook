@@ -15,6 +15,7 @@ has_many :sent_requests, class_name: 'FriendRequest',
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships, class_name: 'User'
   has_many :notifications
+  has_many :posts
 
 
 

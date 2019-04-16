@@ -1,35 +1,8 @@
 <div class="row">
-	<div class="cover-photo-wrapper" >
-		
-
-
-		<div class="profile-photo">
-			<%= image_tag "user-icon-placeholder.png", class: "profile-img" %>
-			<span> <%= @user.name %> </span>
-		</div>
-
-
+	<div class="cover-photo-wrapper" >		
+		<%= render "shared/user_photo", user: @user %>
 		<div class="profile-actions">
-			<% unless current_user.id == @user.id %>
-				<% if current_user.is_friend(@user) %>
-				 <%= link_to "Remove Friend", friendship_path(@user), method: :delete, class: "btn btn-primary" %>
-				<% elsif current_user.is_sent_request(@user) %>
-				 	<%= link_to "Cancel Friend Request", friend_request_path(current_user.is_sent_request(@user)), method: :delete, class: "btn btn-primary" %>
-	             <% elsif current_user.is_received_request(@user) %>
-	             	<%= form_tag(friendships_path, method: :post) do %>
-	                  <%= hidden_field_tag :friend_id, @user.id %>
-	                  <%= submit_tag 'Accept Friend Request', class: 'btn btn-outline-primary btn-sm' %>
-             		 <% end %>
-              		<%= link_to "Deny Friend Request", friend_request_path(current_user.is_received_request(@user)), method: :delete %>
-	             <% else %>
-		             <%= form_tag(friendships_path, method: :post) do %>
-		                  <%= hidden_field_tag :friend_id, @user.id %>
-		                  <%= submit_tag 'Send Friend Request', class: 'btn btn-outline-primary btn-sm' %>
-		              <% end %>
-	             <% end %>
-	         <% else %>
-	         <%= link_to "Edit Your Profile", edit_user_registration_path(current_user), class: 'btn btn-outline-primary btn-sm' %>
-	         <% end %>
+			<%= render render_actions %>
 		</div>
 	</div>
 </div>
@@ -43,13 +16,8 @@
 			<% end %>
 	<% end %>
 	</div>
-	<div class="col-md-9 col-sm-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">Create a post</div>
-		  <div class="panel-body">
-		    Write something...
-		   </div>
-		</div>
+	<div class="col-md-9 col-sm-12">	
+		    <%= render 'posts/form' if current_user.id == @user.id %>
 	</div>
 </div>
 

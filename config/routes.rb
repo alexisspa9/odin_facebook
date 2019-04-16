@@ -14,4 +14,5 @@ Rails.application.routes.draw do
 	        put :make_read
 	    end
 	end
+	resources :posts, only: [:create, :edit, :update, :destroy]
 end

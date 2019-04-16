@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+	<div class="panel-heading">Create a post
+	</div>
+	<div class="panel-body">
+		<%= form_for :post, url: posts_path do |f| %>
+		<%= f.text_field :body %>
+		<%= f.submit  %>
+		<% end  %>
+	</div>
+</div>

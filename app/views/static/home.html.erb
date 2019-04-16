@@ -1,21 +1,28 @@
 <div class="row">
 	<div class="col-md-3 col-sm 12">
 		<%= link_to user_path(current_user) do %>
-		  	  	<div class="profile-photo">
-					<%= image_tag "user-icon-placeholder.png", class: "profile-img" %>
-							<h4><%= current_user.name %></h4>
-				</div>
+				<%= render "shared/user_photo", user: current_user %>
+
 		    <% end %>
 
 	</div>
 	
 	<div class="col-md-6 col-sm 12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">Create a post</div>
-		  <div class="panel-body">
-		    Write something...
-		   </div>
-		</div>
+		 <%= render 'posts/form' %>
+
+
+
+		<% current_user.posts.each do |post| %>
+			<div class="panel panel-default">
+			  <div class="panel-body">
+				<%= render "shared/user_photo", user: post.user %>
+		
+			   <%= post.body %>
+			  </div>
+			</div>
+		<% end %>
+
+
 	</div>
 	<div class="col-md-3 col-sm 12">
 		
@@ -27,10 +34,8 @@
 	  		<li class="list-group-item">
 
 		    <%= link_to user_path(user) do %>
-		  	  	<div class="profile-photo">
-					<%= image_tag "user-icon-placeholder.png", class: "profile-img" %>
-					<span> <%= user.name %> </span>
-				</div>
+				<%= render "shared/user_photo", user: user %>
+
 		    <% end %>
 		    </li>
 	    <% end %>
