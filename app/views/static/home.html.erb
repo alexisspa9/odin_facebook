@@ -12,13 +12,32 @@
 
 
 
-		<% current_user.posts.each do |post| %>
+		<% current_user.feed.each do |post| %>
 			<div class="panel panel-default">
 			  <div class="panel-body">
-				<%= render "shared/user_photo", user: post.user %>
-		
-			   <%= post.body %>
+				<%= render "shared/user_photo", user: post.author %>
+			    <%= post.body %>
+			    <div class="stats"><%= post.likes.count %> Likes <br/><%= post.comments.count %> Comments <br/>
+			    		<%= form_tag(likes_path, method: :post) do %>
+						    <%= hidden_field_tag :post_id, post.id %>
+						    <%= submit_tag 'Like', class: 'btn' %>
+						<% end %>
+			    </div>
+			    <ul class="list-group">
+			    	<% post.comments.each do |comment| %>
+			    		<li class="list-group-item"><%= comment.author.name if comment.author %><br/><%= comment.body %></li>
+						
+					<% end %>
+				</ul>
+			    
 			  </div>
+			    <div class="panel-footer">
+			    <%= form_for :comment, url: comments_path do |f| %>
+			    	<%= f.hidden_field :post_id, value: post.id %>
+					<%= f.text_field :body %>
+					<%= f.submit "Add Comment" %>
+				<% end  %>
+			    </div>
 			</div>
 		<% end %>
 
