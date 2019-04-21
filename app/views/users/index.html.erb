@@ -1,4 +1,4 @@
-<% @users.each do |user| %>
+<% current_user.not_friends.each do |user| %>
 
 <%= user.name %>
 <%= render "shared/sent_friend_request", user: user %>

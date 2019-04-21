@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 	        put :make_read
 	    end
 	end
+  resources :pics, only: [:create, :edit, :update, :destroy]
 	resources :posts, only: [:create, :edit, :update, :destroy]
   resources :comments, only: [:create]
 end

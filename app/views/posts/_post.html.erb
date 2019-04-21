@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+	<%= render "shared/user_photo", user: post.author %>
+    <%= post.body if post.body %>
+   	<div class="photo-small" style="max-width:200px;">
+   		<%= image_tag post.image if post.image.attached? %>
+	</div>
+
+    <div class="stats"><%= post.likes.size %> Likes <br/><%= post.comments.size %> Comments <br/>
+     <%= time_ago_in_words(post.created_at) %> ago
+    		<%= form_tag(likes_path, method: :post) do %>
+    		 	<% if post.image.attached? %>
+    				<%= hidden_field_tag :pic_id, post.id %>
+    			<% else %>
+    	   			  <%= hidden_field_tag :post_id, post.id %>
+    			<% end %>
+			    <%= submit_tag 'Like', class: 'btn' %>
+			<% end %>
+    </div>
+    
+  </div>
+    <div class="panel-footer">
+    	    <ul class="list-group">
+    	<% post.comments.each do |comment| %>
+    		<li class="list-group-item"><%= comment.author.name if comment.author %><br/><%= comment.body %></li>
+			
+		<% end %>
+	</ul>
+    <%= form_for :comment, url: comments_path do |f| %>
+    	<% if post.image.attached? %>
+    		<%= f.hidden_field :pic_id, value: post.id %>
+    	<% else %>
+    	   <%= f.hidden_field :post_id, value: post.id %>
+    	<% end %>
+		<%= f.text_field :body %>
+		<%= f.submit "Add Comment" %>
+	<% end  %>
+    </div>
+</div>

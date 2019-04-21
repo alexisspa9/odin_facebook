@@ -1,0 +1,15 @@
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#post" aria-controls="home" role="tab" data-toggle="tab">Post</a></li>
+    <li role="presentation"><a href="#photo" aria-controls="profile" role="tab" data-toggle="tab">Photo</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="post">
+    	 <%= render 'posts/form' %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="photo">
+    	<%= render 'pics/form' %>
+    </div>
+  </div>

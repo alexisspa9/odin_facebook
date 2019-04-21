@@ -15,9 +15,18 @@
 			<%= friend.name %>
 			<% end %>
 	<% end %>
+	<% @user.pics.each do |pic| %>
+	<div class="photo-small" style="max-width:200px;">
+	<%= image_tag pic.image %>
 	</div>
-	<div class="col-md-9 col-sm-12">	
-		    <%= render 'posts/form' if current_user.id == @user.id %>
+	<% end %>
+	</div>
+	<div class="col-md-9 col-sm-12">
+				<%= render "shared/post_photo_form" if current_user.id == @user.id %>
+		    	<% @user.user_feed.each do |post| %>
+					<%= render "posts/post", post: post %>
+				<% end %>
+
 	</div>
 </div>
 

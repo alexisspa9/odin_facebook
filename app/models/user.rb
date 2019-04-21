@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :friends, through: :friendships, class_name: 'User'
   has_many :notifications
   has_many :posts
+  has_many :pics
   has_many :comments, dependent: :nullify
   has_many :likes, dependent: :nullify
 
@@ -51,12 +52,23 @@ class User < ApplicationRecord
     self.notifications.where(is_read: false)
   end
 
-   def feed
-    # friend_ids = "SELECT friend_id FROM friendships
-    #                  WHERE  friend_id = :user_id"
-    # Post.where("user_id IN (#{friend_ids})
-    #                  OR user_id = :user_id", user_id: id)
-    Post.where("user_id IN (?) OR user_id = ?", friend_ids, id)
+  def user_feed
+    @posts =  Post.where("user_id = :user_id", user_id: id).includes(:likes, :comments)
+    @pics = Pic.where("user_id = :user_id", user_id: id).includes(:likes, :comments)
+    @combined = @posts + @pics
+    @combined.sort_by { |h| h[:created_at] }.reverse!
+  end
+
+  def feed
+    friend_ids = "SELECT user_id FROM friendships
+                     WHERE  friend_id = :user_id"
+    
+    @posts =  Post.where("user_id IN (#{friend_ids})
+                     OR user_id = :user_id", user_id: id).includes(:likes, :comments)
+    @pics = Pic.where("user_id IN (#{friend_ids})
+                     OR user_id = :user_id", user_id: id).includes(:likes, :comments)
+    @combined = @posts + @pics
+    @combined.sort_by { |h| h[:created_at] }.reverse!
 
   end
 
