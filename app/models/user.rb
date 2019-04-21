@@ -48,6 +48,10 @@ class User < ApplicationRecord
      self.received_requests.find_by(requestor_id: friend.id)
   end
 
+  def is_liked?(post)
+    self.likes.find_by(likeable_id: post.id, likeable_type: post.class.name)
+  end
+
   def unread_notifications
     self.notifications.where(is_read: false)
   end

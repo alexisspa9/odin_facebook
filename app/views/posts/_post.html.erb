@@ -1,28 +1,50 @@
 <div class="panel panel-default">
   <div class="panel-body">
 	<%= render "shared/user_photo", user: post.author %>
-    <%= post.body if post.body %>
-   	<div class="photo-small" style="max-width:200px;">
-   		<%= image_tag post.image if post.image.attached? %>
+		<br/>
+	<div class="posted-at">
+			 Posted <%= time_ago_in_words(post.created_at) %> ago
 	</div>
+	<hr/>
+	<div class="post-body">
+    <%= post.body if post.body %>
+	   	<div class="photo-small" style="max-width:200px;">
+	   		<%= image_tag post.image if post.image.attached? %>
+		</div>
+	</div>
+	<hr/>
 
-    <div class="stats"><%= post.likes.size %> Likes <br/><%= post.comments.size %> Comments <br/>
-     <%= time_ago_in_words(post.created_at) %> ago
+    <div class="stats">
+		<div class="number-of-likes">
+		<span class="glyphicon glyphicon-thumbs-up"></span> <%= pluralize(post.likes.size, 'like') %>
+		</div>
+		<div class="number-of-comments">
+			<span class="glyphicon glyphicon-comment"></span> <%= pluralize(post.comments.size, 'comment') %>
+		</div>
+    </div>
+    	<% unless current_user.is_liked?(post) %>
     		<%= form_tag(likes_path, method: :post) do %>
     		 	<% if post.image.attached? %>
     				<%= hidden_field_tag :pic_id, post.id %>
     			<% else %>
     	   			  <%= hidden_field_tag :post_id, post.id %>
     			<% end %>
+    			<div class="like-button">
 			    <%= submit_tag 'Like', class: 'btn' %>
+			    </div>
 			<% end %>
-    </div>
-    
+		<% else %>
+			<br/>
+			<%= link_to "Dislike", like_path(current_user.is_liked?(post)), method: :delete, class: "btn btn-primary" %>
+    	<% end %>
   </div>
     <div class="panel-footer">
     	    <ul class="list-group">
     	<% post.comments.each do |comment| %>
-    		<li class="list-group-item"><%= comment.author.name if comment.author %><br/><%= comment.body %></li>
+    		<li class="list-group-item">
+			<%= render "shared/user_photo", user: comment.author if comment.author %>
+    			commented <%= time_ago_in_words(comment.created_at) %> ago<br/><%= comment.body %>
+    		</li>
 			
 		<% end %>
 	</ul>

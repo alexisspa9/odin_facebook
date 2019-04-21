@@ -5,4 +5,5 @@ class Comment < ApplicationRecord
 
   validates :body, length: {in: 1..255}, format: {without: /\A\s+\z/,
     message:"can't be blank"}
+    default_scope  { order(created_at: :desc) }
 end

@@ -18,6 +18,18 @@ class LikesController < ApplicationController
       end
     end
 
+    def destroy
+    	if like = current_user.likes.find(params[:id])
+			like.destroy
+			flash[:warning] = "You don't like the post"
+			redirect_back(fallback_location: root_path)
+		else
+			flash[:warning] = "Can't find post"
+			redirect_back(fallback_location: root_path)
+		end
+    	
+    end
+
     private
 
     def find_likeable
